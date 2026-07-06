@@ -3,7 +3,9 @@ from typing import List, Dict, Any, Optional
 import chromadb
 from openai import OpenAI
 
+# pyrefly: ignore [missing-import]
 from src.config import settings
+# pyrefly: ignore [missing-import]
 from src.ingestion.chunker import DocumentChunk
 
 class DenseIndex:
@@ -65,13 +67,17 @@ class DenseIndex:
         
         metadatas = []
         for i, chunk in enumerate(chunks):
-            metadatas.append({
+            meta = {
                 "source_file": chunk.source_file,
                 "chunk_index": i,
                 "section_heading": chunk.section_heading or "",
                 "chunking_strategy": chunk.chunking_strategy,
-                "character_count": chunk.character_count
-            })
+                "character_count": chunk.character_count,
+                "file_type": chunk.file_type
+            }
+            if chunk.page_number is not None:
+                meta["page_number"] = chunk.page_number
+            metadatas.append(meta)
             
         self.collection.upsert(
             ids=ids,
