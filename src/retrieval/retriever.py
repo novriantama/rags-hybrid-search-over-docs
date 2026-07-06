@@ -58,3 +58,14 @@ class HybridRetriever:
             })
             
         return formatted_results
+
+    def sparse_search(self, query: str, k: int = 10) -> List[Dict[str, Any]]:
+        """
+        Queries the BM25 sparse index and retrieves the top-k chunks.
+        
+        Returns:
+            List[Dict[str, Any]]: List of dicts containing 'chunk' (DocumentChunk) and 'score' (float, BM25 score).
+        """
+        if not query or k <= 0:
+            return []
+        return self.sparse_index.search(query, k=k)

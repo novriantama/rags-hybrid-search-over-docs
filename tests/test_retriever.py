@@ -90,3 +90,31 @@ def test_dense_search_retrieval(tmp_path, indexed_chunks):
     assert chunk.section_heading == "Authentication"
     assert chunk.source_file == "doc1.md"
     assert chunk.page_number == 1
+
+def test_sparse_search_retrieval(tmp_path, indexed_chunks):
+    persist_file = tmp_path / "bm25_index.pkl"
+    sparse = SparseIndex(persist_path=str(persist_file))
+    
+    # Add a third dummy chunk to ensure positive BM25 scores
+    dummy_chunk = DocumentChunk(
+        id="doc1:sec3:strategy:0",
+        text="This is a third dummy document to prevent zero/negative IDF scores for 50 percent terms.",
+        source_file="doc1.md",
+        section_heading="Dummy",
+        page_number=1,
+        file_type="md",
+        chunking_strategy="recursive",
+        character_count=88
+    )
+    corpus = indexed_chunks + [dummy_chunk]
+    sparse.add_chunks(corpus)
+    
+    # Setup retriever (dense index is mocked since not used here)
+    retriever = HybridRetriever(dense_index=MagicMock(), sparse_index=sparse)
+    
+    # Query for "Postgres" keyword, which should match doc2
+    results = retriever.sparse_search("Postgres", k=1)
+    
+    assert len(results) == 1
+    assert results[0]["chunk"].id == indexed_chunks[1].id
+    assert results[0]["score"] > 0.0

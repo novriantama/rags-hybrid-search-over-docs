@@ -40,3 +40,4 @@ Thumbs.db
 data/chroma/
 data/documents/*
 !data/documents/.gitkeep
+docs/compiled_implementation_plans.md
