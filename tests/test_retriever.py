@@ -118,3 +118,52 @@ def test_sparse_search_retrieval(tmp_path, indexed_chunks):
     assert len(results) == 1
     assert results[0]["chunk"].id == indexed_chunks[1].id
     assert results[0]["score"] > 0.0
+
+def test_rrf_scoring():
+    chunk_a = DocumentChunk(id="A", text="Text A", source_file="doc.md", file_type="md", chunking_strategy="fixed", character_count=6)
+    chunk_b = DocumentChunk(id="B", text="Text B", source_file="doc.md", file_type="md", chunking_strategy="fixed", character_count=6)
+    chunk_c = DocumentChunk(id="C", text="Text C", source_file="doc.md", file_type="md", chunking_strategy="fixed", character_count=6)
+    
+    # Dense results: A is 1st, B is 2nd
+    dense_results = [
+        {"chunk": chunk_a, "score": 0.9},
+        {"chunk": chunk_b, "score": 0.8}
+    ]
+    # Sparse results: C is 1st, B is 2nd
+    sparse_results = [
+        {"chunk": chunk_c, "score": 1.5},
+        {"chunk": chunk_b, "score": 1.2}
+    ]
+    
+    retriever = HybridRetriever(dense_index=MagicMock(), sparse_index=MagicMock())
+    
+    # 1. Equal weights (0.5 dense / 0.5 sparse), k = 60
+    # Score A = 0.5 * (1 / 61) = 0.008196
+    # Score C = 0.5 * (1 / 61) = 0.008196
+    # Score B = 0.5 * (1 / 62) + 0.5 * (1 / 62) = 1/62 = 0.016129
+    # B should rank 1st because it appears in both lists, even though A & C were rank 1.
+    fused_1 = retriever.reciprocal_rank_fusion(
+        dense_results, sparse_results, dense_weight=0.5, sparse_weight=0.5, rrf_k=60
+    )
+    
+    assert len(fused_1) == 3
+    assert fused_1[0]["chunk"].id == "B" # boosted!
+    assert fused_1[0]["score"] == pytest.approx(1.0 / 62.0)
+    
+    # 2. Configurable weights: Dense-heavy (0.9 dense / 0.1 sparse)
+    # Score A = 0.9 * (1/61) = 0.014754
+    # Score B = 0.9 * (1/62) + 0.1 * (1/62) = 1/62 = 0.016129
+    # Score C = 0.1 * (1/61) = 0.001639
+    # B still ranks 1st.
+    # If we do Dense-only (1.0 dense / 0.0 sparse):
+    # Score A = 1.0 * (1/61) = 0.016393
+    # Score B = 1.0 * (1/62) = 0.016129
+    # Score C = 0.0
+    # A should rank 1st.
+    fused_2 = retriever.reciprocal_rank_fusion(
+        dense_results, sparse_results, dense_weight=1.0, sparse_weight=0.0, rrf_k=60
+    )
+    assert fused_2[0]["chunk"].id == "A"
+    assert fused_2[1]["chunk"].id == "B"
+    assert len(fused_2) == 2 # C is excluded because sparse weight is 0.0 (and didn't appear in dense)
+
