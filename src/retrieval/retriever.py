@@ -118,22 +118,25 @@ class HybridRetriever:
     def hybrid_search(
         self,
         query: str,
-        k: int = 10,
+        k: int = 5,
         dense_weight: float = 0.5,
         sparse_weight: float = 0.5,
         candidate_k: int = 20,
-        rrf_k: int = 60
+        rrf_k: int = 60,
+        use_reranker: bool = True
     ) -> List[Dict[str, Any]]:
         """
-        Executes both dense and sparse queries and fuses their rankings using Reciprocal Rank Fusion (RRF).
+        Executes both dense and sparse queries, fuses their rankings using Reciprocal Rank Fusion (RRF),
+        and refines the candidates using a Cross-Encoder reranker.
         
         Returns:
-            List[Dict[str, Any]]: Top-k fused search results.
+            List[Dict[str, Any]]: Top-k refined search results.
         """
         if not query or k <= 0:
             return []
 
         # 1. Query both dense and sparse candidate pools
+        # Retrieve candidate_k chunks for fusion
         dense_candidates = self.dense_search(query, k=candidate_k)
         sparse_candidates = self.sparse_search(query, k=candidate_k)
 
@@ -146,5 +149,18 @@ class HybridRetriever:
             rrf_k=rrf_k
         )
 
-        # 3. Return top-k matches
+        # 3. Apply Re-ranking if enabled
+        if use_reranker and fused_results:
+            if not getattr(self, "reranker", None):
+                # pyrefly: ignore [missing-import]
+                from src.retrieval.reranker import CrossEncoderReranker
+                self.reranker = CrossEncoderReranker()
+                
+            # Grab raw chunks from fused candidates (top candidate_k RRF chunks)
+            candidates = [res["chunk"] for res in fused_results[:candidate_k]]
+            
+            # Refine candidates through the cross-encoder
+            return self.reranker.rerank(query, candidates, top_k=k)
+
+        # Fallback: Return raw top-k RRF results
         return fused_results[:k]
