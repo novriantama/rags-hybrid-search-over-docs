@@ -11,10 +11,16 @@ from src.ingestion.chunker import DocumentChunk
 class DenseIndex:
     """Manages ChromaDB persistent storage, embedding generation, and vector retrieval."""
     def __init__(self, persist_directory: Optional[str] = None, openai_client: Optional[OpenAI] = None):
-        path = persist_directory or settings.get_absolute_path(settings.chroma_db_path).as_posix()
-        os.makedirs(path, exist_ok=True)
-        
-        self.client = chromadb.PersistentClient(path=path)
+        if settings.chroma_host:
+            self.client = chromadb.HttpClient(
+                host=settings.chroma_host,
+                port=settings.chroma_port
+            )
+        else:
+            path = persist_directory or settings.get_absolute_path(settings.chroma_db_path).as_posix()
+            os.makedirs(path, exist_ok=True)
+            self.client = chromadb.PersistentClient(path=path)
+            
         # Using cosine similarity metric: distance is 1 - CosineSimilarity
         self.collection = self.client.get_or_create_collection(
             name="rag_chunks",

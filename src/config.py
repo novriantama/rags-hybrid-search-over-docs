@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -10,6 +11,8 @@ class Settings(BaseSettings):
 
     # Database and Data Paths
     chroma_db_path: str = "./data/chroma"
+    chroma_host: Optional[str] = None
+    chroma_port: int = 8000
     data_dir: str = "./data/documents"
 
     # API Settings
