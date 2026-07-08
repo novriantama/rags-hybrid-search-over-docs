@@ -12,4 +12,16 @@ src/dashboard/__init__.py
 src/evaluation/__init__.py
 src/generation/__init__.py
 src/ingestion/__init__.py
+src/ingestion/chunker.py
+src/ingestion/loader.py
 src/retrieval/__init__.py
+src/retrieval/dense.py
+src/retrieval/index_manager.py
+src/retrieval/reranker.py
+src/retrieval/retriever.py
+src/retrieval/sparse.py
+tests/test_chunker.py
+tests/test_indexing.py
+tests/test_loader.py
+tests/test_reranker.py
+tests/test_retriever.py
