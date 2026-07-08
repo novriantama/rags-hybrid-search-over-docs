@@ -18,7 +18,7 @@ class CrossEncoderReranker:
 
     def _load_model(self):
         """Lazy loads the CrossEncoder model, capturing errors and enabling fallback if download fails."""
-        if self.model or self._fallback_mode_active:
+        if self.model is not None or self._fallback_mode_active:
             return
             
         try:
@@ -73,7 +73,9 @@ class CrossEncoderReranker:
             # Neural evaluation
             try:
                 pairs = [[query, chunk.text] for chunk in chunks]
+                assert self.model is not None
                 # Predict returns standard float scores
+                # pyrefly: ignore [no-matching-overload]
                 scores = self.model.predict(pairs)
                 for idx, score in enumerate(scores):
                     scored_results.append({

@@ -3,8 +3,11 @@ from typing import List, Tuple, Optional
 import numpy as np
 from openai import OpenAI
 
+# pyrefly: ignore [missing-import]
 from src.ingestion.chunker import DocumentChunk
+# pyrefly: ignore [missing-import]
 from src.retrieval.dense import DenseIndex
+# pyrefly: ignore [missing-import]
 from src.retrieval.sparse import SparseIndex
 
 logger = logging.getLogger(__name__)
@@ -49,8 +52,9 @@ class IndexManager:
             # A. Check similarity against chunks already persisted in ChromaDB
             if self.dense_index.collection.count() > 0:
                 closest = self.dense_index.query_closest(embedding, n_results=1)
-                if closest and closest.get("distances") and len(closest["distances"][0]) > 0:
-                    distance = closest["distances"][0][0]
+                distances = closest.get("distances")
+                if distances and len(distances[0]) > 0:
+                    distance = distances[0][0]
                     similarity = 1.0 - distance
                     if similarity > 0.95:
                          logger.info(

@@ -1,6 +1,7 @@
 import os
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, cast
 import chromadb
+from chromadb import QueryResult
 from openai import OpenAI
 
 # pyrefly: ignore [missing-import]
@@ -87,12 +88,12 @@ class DenseIndex:
             
         self.collection.upsert(
             ids=ids,
-            embeddings=embeddings,
+            embeddings=cast(Any, embeddings),
             documents=documents,
             metadatas=metadatas
         )
 
-    def query_closest(self, embedding: List[float], n_results: int = 1) -> Dict[str, Any]:
+    def query_closest(self, embedding: List[float], n_results: int = 1) -> QueryResult:
         """Queries for the closest matching document in the collection to check duplicates."""
         return self.collection.query(
             query_embeddings=[embedding],
@@ -110,12 +111,25 @@ class DenseIndex:
         
         formatted_results = []
         if results and results.get("ids") and len(results["ids"][0]) > 0:
-            for idx in range(len(results["ids"][0])):
+            ids = results["ids"][0]
+            raw_docs = results.get("documents")
+            raw_dist = results.get("distances")
+            raw_meta = results.get("metadatas")
+            
+            documents = raw_docs[0] if raw_docs is not None else []
+            distances = raw_dist[0] if raw_dist is not None else []
+            metadatas = raw_meta[0] if raw_meta is not None else []
+            
+            for idx in range(len(ids)):
+                text = documents[idx] if idx < len(documents) else ""
+                distance = distances[idx] if idx < len(distances) else 0.0
+                metadata = metadatas[idx] if idx < len(metadatas) else {}
+                
                 formatted_results.append({
-                    "id": results["ids"][0][idx],
-                    "text": results["documents"][0][idx],
-                    "distance": results["distances"][0][idx],
-                    "metadata": results["metadatas"][0][idx]
+                    "id": ids[idx],
+                    "text": text,
+                    "distance": distance,
+                    "metadata": metadata
                 })
         return formatted_results
 
