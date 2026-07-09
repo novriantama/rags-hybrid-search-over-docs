@@ -1,0 +1,418 @@
+[
+  {
+    "id": "q1",
+    "category": "straightforward_lookup",
+    "question": "What is the expiration time for access tokens?",
+    "ground_truth": "Access tokens expire exactly 1 hour (3600 seconds) after issuance.",
+    "source_documents": ["auth_service.md"],
+    "section": "Protocols and Tokens"
+  },
+  {
+    "id": "q2",
+    "category": "straightforward_lookup",
+    "question": "Which algorithm is used for signing JWT tokens?",
+    "ground_truth": "JWT tokens are signed using the RS256 algorithm.",
+    "source_documents": ["auth_service.md"],
+    "section": "Token Signing and Cryptography"
+  },
+  {
+    "id": "q3",
+    "category": "straightforward_lookup",
+    "question": "At what URL is the JWKS public key endpoint located?",
+    "ground_truth": "The public keys are exposed via JWKS at https://auth.internal.net/.well-known/jwks.json.",
+    "source_documents": ["auth_service.md"],
+    "section": "Token Signing and Cryptography"
+  },
+  {
+    "id": "q4",
+    "category": "straightforward_lookup",
+    "question": "When is public-private key rotation scheduled?",
+    "ground_truth": "Key rotation occurs automatically on the 1st of every month at 00:00 UTC.",
+    "source_documents": ["auth_service.md"],
+    "section": "Token Signing and Cryptography"
+  },
+  {
+    "id": "q5",
+    "category": "straightforward_lookup",
+    "question": "How long is the grace period for previous keys after rotation?",
+    "ground_truth": "Previous keys are retained for a 24-hour grace period to prevent request failures during propagation.",
+    "source_documents": ["auth_service.md"],
+    "section": "Token Signing and Cryptography"
+  },
+  {
+    "id": "q6",
+    "category": "straightforward_lookup",
+    "question": "What are the four RBAC roles supported in the system?",
+    "ground_truth": "The four supported roles are admin, developer, operator, and viewer.",
+    "source_documents": ["auth_service.md"],
+    "section": "Authorization Roles and Scopes"
+  },
+  {
+    "id": "q7",
+    "category": "straightforward_lookup",
+    "question": "Under what claim is the user role embedded in the JWT token?",
+    "ground_truth": "Roles are embedded in the JWT token claim under https://claims.internal.net/roles.",
+    "source_documents": ["auth_service.md"],
+    "section": "Authorization Roles and Scopes"
+  },
+  {
+    "id": "q8",
+    "category": "straightforward_lookup",
+    "question": "What is the primary production database host name?",
+    "ground_truth": "The primary production database host is prod-db-01.internal.net.",
+    "source_documents": ["database_guide.md"],
+    "section": "Production Database Setup"
+  },
+  {
+    "id": "q9",
+    "category": "straightforward_lookup",
+    "question": "What host name is used for the database read replica?",
+    "ground_truth": "The read replica host is prod-db-replica-01.internal.net.",
+    "source_documents": ["database_guide.md"],
+    "section": "Production Database Setup"
+  },
+  {
+    "id": "q10",
+    "category": "straightforward_lookup",
+    "question": "What is the default port for the PostgreSQL database?",
+    "ground_truth": "The database port is 5432.",
+    "source_documents": ["database_guide.md"],
+    "section": "Production Database Setup"
+  },
+  {
+    "id": "q11",
+    "category": "straightforward_lookup",
+    "question": "What SSL mode is enforced on database connections?",
+    "ground_truth": "The database SSL mode is verify-full.",
+    "source_documents": ["database_guide.md"],
+    "section": "Production Database Setup"
+  },
+  {
+    "id": "q12",
+    "category": "straightforward_lookup",
+    "question": "What is the maximum connection pool size allowed per client node?",
+    "ground_truth": "The maximum connection pool size is 150 connections per client node.",
+    "source_documents": ["database_guide.md"],
+    "section": "Production Database Setup"
+  },
+  {
+    "id": "q13",
+    "category": "straightforward_lookup",
+    "question": "What is the idle timeout for database connections?",
+    "ground_truth": "Connections idle for more than 10 minutes (600 seconds) are automatically terminated.",
+    "source_documents": ["database_guide.md"],
+    "section": "Production Database Setup"
+  },
+  {
+    "id": "q14",
+    "category": "straightforward_lookup",
+    "question": "How is database replication configured between primary and replica?",
+    "ground_truth": "Replication is configured as asynchronous streaming replication.",
+    "source_documents": ["database_guide.md"],
+    "section": "Database Replication and Failover"
+  },
+  {
+    "id": "q15",
+    "category": "straightforward_lookup",
+    "question": "What is the replication data lag limit alert threshold?",
+    "ground_truth": "Replication lag must not exceed 10MB of WAL data.",
+    "source_documents": ["database_guide.md"],
+    "section": "Database Replication and Failover"
+  },
+  {
+    "id": "q16",
+    "category": "straightforward_lookup",
+    "question": "When are daily database backups scheduled to run?",
+    "ground_truth": "Daily pg_dump logical backups are taken every day at 02:00 UTC.",
+    "source_documents": ["database_guide.md"],
+    "section": "Backup Schedules and Procedures"
+  },
+  {
+    "id": "q17",
+    "category": "straightforward_lookup",
+    "question": "How long are weekly database backups retained?",
+    "ground_truth": "Weekly backups are retained for 90 days.",
+    "source_documents": ["database_guide.md"],
+    "section": "Backup Schedules and Procedures"
+  },
+  {
+    "id": "q18",
+    "category": "straightforward_lookup",
+    "question": "What encryption standard and service are used for storing database backups?",
+    "ground_truth": "All backups are encrypted using AES-256 with keys managed via AWS KMS.",
+    "source_documents": ["database_guide.md"],
+    "section": "Backup Schedules and Procedures"
+  },
+  {
+    "id": "q19",
+    "category": "straightforward_lookup",
+    "question": "Which port is scraped by Prometheus for metrics?",
+    "ground_truth": "Microservices expose Prometheus metrics on port 9090.",
+    "source_documents": ["monitoring.md"],
+    "section": "Metrics and Observability Ports"
+  },
+  {
+    "id": "q20",
+    "category": "straightforward_lookup",
+    "question": "At what URL and port can Grafana be accessed internally?",
+    "ground_truth": "Grafana is accessible internally at https://grafana.internal.net on port 3000.",
+    "source_documents": ["monitoring.md"],
+    "section": "Metrics and Observability Ports"
+  },
+  {
+    "id": "q21",
+    "category": "straightforward_lookup",
+    "question": "What is the logging format required for all microservices?",
+    "ground_truth": "All microservices must write logs to standard output (stdout) in JSON format.",
+    "source_documents": ["monitoring.md"],
+    "section": "Logging Configurations"
+  },
+  {
+    "id": "q22",
+    "category": "straightforward_lookup",
+    "question": "What standard keys must be included in every JSON log entry?",
+    "ground_truth": "Every log entry must contain timestamp, level, service_name, trace_id, and message.",
+    "source_documents": ["monitoring.md"],
+    "section": "Logging Configurations"
+  },
+  {
+    "id": "q23",
+    "category": "straightforward_lookup",
+    "question": "What CPU utilization threshold triggers a CPU alert?",
+    "ground_truth": "A CPU Alert triggers if CPU utilization exceeds 85% for more than 5 consecutive minutes.",
+    "source_documents": ["monitoring.md"],
+    "section": "Alerting Thresholds"
+  },
+  {
+    "id": "q24",
+    "category": "straightforward_lookup",
+    "question": "What HTTP 5xx error rate triggers an alert?",
+    "ground_truth": "An alert triggers if the error rate exceeds 5% of total requests over any 1-minute sliding window.",
+    "source_documents": ["monitoring.md"],
+    "section": "Alerting Thresholds"
+  },
+  {
+    "id": "q25",
+    "category": "straightforward_lookup",
+    "question": "What is the latency threshold for a response latency alert?",
+    "ground_truth": "An alert triggers if P99 latency exceeds 500ms for more than 2 minutes.",
+    "source_documents": ["monitoring.md"],
+    "section": "Alerting Thresholds"
+  },
+  {
+    "id": "q26",
+    "category": "multi_hop",
+    "question": "Which service runs on port 8001 and what headers are required to communicate with it?",
+    "ground_truth": "The Authentication Service runs on port 8001. To communicate with it, requests must supply a Bearer token in the Authorization header.",
+    "source_documents": ["deployment_ops.md", "auth_service.md"],
+    "section": "Ports and Network Configuration / Protocols and Tokens"
+  },
+  {
+    "id": "q27",
+    "category": "multi_hop",
+    "question": "If the primary database fails, which host is promoted to primary and what port will it listen on?",
+    "ground_truth": "If the primary database fails, read replica host prod-db-replica-01.internal.net is promoted to primary. It will listen on database port 5432.",
+    "source_documents": ["database_guide.md", "deployment_ops.md"],
+    "section": "Database Replication and Failover / Ports and Network Configuration"
+  },
+  {
+    "id": "q28",
+    "category": "multi_hop",
+    "question": "How does the connection pool limit in the staging environment compare to production?",
+    "ground_truth": "In the production environment, the maximum pool limit is 150 connections per client node. Staging scales down maximum connection limits to 50% of production, which is 75 connections.",
+    "source_documents": ["database_guide.md", "deployment_ops.md"],
+    "section": "Production Database Setup / Environment Definitions"
+  },
+  {
+    "id": "q29",
+    "category": "multi_hop",
+    "question": "When the monthly key rotation occurs, does it happen at the same time as monthly database backups?",
+    "ground_truth": "No. Public-private key rotation occurs automatically on the 1st of every month at 00:00 UTC, while monthly database backups are executed on the 1st of every month at 04:00 UTC. There is a 4-hour difference.",
+    "source_documents": ["auth_service.md", "database_guide.md"],
+    "section": "Token Signing and Cryptography / Backup Schedules and Procedures"
+  },
+  {
+    "id": "q30",
+    "category": "multi_hop",
+    "question": "What logging keys must the microservice running on port 8001 output to stdout?",
+    "ground_truth": "The microservice running on port 8001 is the Authentication Service. It must output logs to stdout in JSON format, containing standard keys: timestamp, level, service_name, trace_id, and message.",
+    "source_documents": ["deployment_ops.md", "monitoring.md"],
+    "section": "Ports and Network Configuration / Logging Configurations"
+  },
+  {
+    "id": "q31",
+    "category": "multi_hop",
+    "question": "Is the caching database hosted on the same port as the metrics monitoring server?",
+    "ground_truth": "No. The caching database (Redis) runs internally on port 6379, whereas the monitoring agent exposes metrics on port 9090.",
+    "source_documents": ["deployment_ops.md"],
+    "section": "Ports and Network Configuration"
+  },
+  {
+    "id": "q32",
+    "category": "multi_hop",
+    "question": "If P99 response latency exceeds 500ms for 3 minutes, where does the alerting manager send notifications?",
+    "ground_truth": "Since P99 latency exceeds 500ms for more than 2 minutes, it triggers an alert. The alerting manager then routes notifications to Slack and PagerDuty.",
+    "source_documents": ["monitoring.md"],
+    "section": "Alerting Thresholds"
+  },
+  {
+    "id": "q33",
+    "category": "multi_hop",
+    "question": "Which branch deploy triggers dev environment staging, and what domain suffix does it use?",
+    "ground_truth": "Merges into the dev branch trigger an automatic deploy to the development environment, which hosts endpoints at *.dev.internal.net.",
+    "source_documents": ["deployment_ops.md"],
+    "section": "Deployment Pipelines / Environment Definitions"
+  },
+  {
+    "id": "q34",
+    "category": "multi_hop",
+    "question": "What role does a user need to modify monitoring settings in the production environment?",
+    "ground_truth": "To modify monitoring settings, a user needs the operator role. In production, operators have read and write permissions, while developers only have read-only access on production.",
+    "source_documents": ["auth_service.md"],
+    "section": "Authorization Roles and Scopes"
+  },
+  {
+    "id": "q35",
+    "category": "multi_hop",
+    "question": "If replication lag exceeds 10MB WAL data for 6 minutes, what alerts and logs are produced?",
+    "ground_truth": "An alert triggers because replication lag exceeded 10MB for more than 5 minutes. The logs emitted are in JSON format containing timestamp, level, service_name, trace_id, and message.",
+    "source_documents": ["database_guide.md", "monitoring.md"],
+    "section": "Database Replication and Failover / Logging Configurations"
+  },
+  {
+    "id": "q36",
+    "category": "multi_hop",
+    "question": "If the API Gateway exposes public traffic, what ports does it bind and which domain name hosts its production endpoints?",
+    "ground_truth": "The API Gateway exposes public HTTPS port 443 and internal port 8080. Its production workloads are hosted at the domain suffix *.internal.net.",
+    "source_documents": ["deployment_ops.md"],
+    "section": "Ports and Network Configuration / Environment Definitions"
+  },
+  {
+    "id": "q37",
+    "category": "multi_hop",
+    "question": "Does a developer have permission to execute manual deployments to production?",
+    "ground_truth": "No. The developer role is read-only on production. Manual production releases must be promoted from staging and require approval from lead operators.",
+    "source_documents": ["auth_service.md", "deployment_ops.md"],
+    "section": "Authorization Roles and Scopes / Deployment Pipelines"
+  },
+  {
+    "id": "q38",
+    "category": "multi_hop",
+    "question": "What is the automatic failover ping timeout threshold for the host prod-db-01.internal.net?",
+    "ground_truth": "If prod-db-01.internal.net fails to respond to pings for more than 30 consecutive seconds, failover initiates.",
+    "source_documents": ["database_guide.md"],
+    "section": "Database Replication and Failover"
+  },
+  {
+    "id": "q39",
+    "category": "multi_hop",
+    "question": "How long is the retention for snapshots taken on Sundays at 03:00 UTC?",
+    "ground_truth": "Snapshots taken on Sundays at 03:00 UTC are weekly backups. They are retained for 90 days.",
+    "source_documents": ["database_guide.md"],
+    "section": "Backup Schedules and Procedures"
+  },
+  {
+    "id": "q40",
+    "category": "multi_hop",
+    "question": "Can a client node open 100 connections to the database in the staging environment?",
+    "ground_truth": "No. Production allows 150 connections per client node. Staging connection limits are scaled down by 50% (allowing a max of 75 connections), so 100 connections will exceed the limit.",
+    "source_documents": ["database_guide.md", "deployment_ops.md"],
+    "section": "Production Database Setup / Environment Definitions"
+  },
+  {
+    "id": "q41",
+    "category": "no_answer",
+    "question": "What is the specific IP address of the gateway router?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q42",
+    "category": "no_answer",
+    "question": "How do you configure the billing service credentials?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q43",
+    "category": "no_answer",
+    "question": "Which programming language is used to write the microservices?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q44",
+    "category": "no_answer",
+    "question": "What is the password for the database user?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q45",
+    "category": "no_answer",
+    "question": "How many nodes are in the development Kubernetes cluster?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q46",
+    "category": "no_answer",
+    "question": "What is the SMTP host configuration for email alerts?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q47",
+    "category": "no_answer",
+    "question": "Which cloud provider hosts our microservice infrastructure?",
+    "ground_truth": "I do not have enough information in the provided context to answer this question.",
+    "source_documents": [],
+    "section": ""
+  },
+  {
+    "id": "q48",
+    "category": "ambiguous",
+    "question": "How long is the validity duration?",
+    "ground_truth": "The context mentions multiple validity durations: access tokens are valid for 1 hour, refresh tokens are valid for 30 days, key rotation grace periods are valid for 24 hours, and database backup retention lasts 30 days (daily), 90 days (weekly), or indefinitely (monthly). Please specify which one you are asking about.",
+    "source_documents": ["auth_service.md", "database_guide.md"],
+    "section": "Protocols and Tokens / Backup Schedules and Procedures"
+  },
+  {
+    "id": "q49",
+    "category": "ambiguous",
+    "question": "What is the timeout limit?",
+    "ground_truth": "The context mentions multiple timeouts: database client idle connections are terminated after a 10-minute timeout, and deployment pipelines rollback if health checks fail for a 3-minute timeout. Please specify which timeout you are asking about.",
+    "source_documents": ["database_guide.md", "deployment_ops.md"],
+    "section": "Production Database Setup / Deployment Pipelines"
+  },
+  {
+    "id": "q50",
+    "category": "ambiguous",
+    "question": "Which port is used?",
+    "ground_truth": "The microservices use multiple ports: the Database on 5432, Cache (Redis) on 6379, Authentication Service on 8001, API Gateway on 443/8080, Prometheus on 9090, and Grafana on 3000. Please specify which service or port context you are asking about.",
+    "source_documents": ["deployment_ops.md", "monitoring.md"],
+    "section": "Ports and Network Configuration / Metrics and Observability Ports"
+  },
+  {
+    "id": "q51",
+    "category": "ambiguous",
+    "question": "Who has write access?",
+    "ground_truth": "Write access depends on the role: 'admin' has write access across all services, 'developer' has write access to dev and staging environments only, and 'operator' has write access to deployment and monitoring. Please specify which environment or service write access you are referring to.",
+    "source_documents": ["auth_service.md"],
+    "section": "Authorization Roles and Scopes"
+  },
+  {
+    "id": "q52",
+    "category": "ambiguous",
+    "question": "When does rotation happen?",
+    "ground_truth": "The context specifies token signing key rotation on the 1st of every month at 00:00 UTC. If you are referring to backups or logs, monthly backups are scheduled on the 1st of every month at 04:00 UTC. Please specify which rotation you refer to.",
+    "source_documents": ["auth_service.md", "database_guide.md"],
+    "section": "Token Signing and Cryptography / Backup Schedules and Procedures"
+  }
+]
