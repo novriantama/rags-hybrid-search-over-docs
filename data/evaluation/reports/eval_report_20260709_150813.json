@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-07-09T15:08:13.598261",
+  "summary": {
+    "total_cases": 5,
+    "overall_averages": {
+      "correctness": 0.94,
+      "faithfulness": 1.0,
+      "retrieval_relevance": 1.0,
+      "citation_accuracy": 1.0
+    },
+    "category_averages": {
+      "straightforward_lookup": {
+        "count": 2,
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "multi_hop": {
+        "count": 1,
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "no_answer": {
+        "count": 1,
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "ambiguous": {
+        "count": 1,
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      }
+    }
+  },
+  "detail": [
+    {
+      "question": "What is the expiration time for access tokens?",
+      "generated_answer": "Access tokens expire exactly 1 hour after issuance [1].",
+      "ground_truth": "Access tokens expire exactly 1 hour (3600 seconds) after issuance.",
+      "category": "straightforward_lookup",
+      "metrics": {
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "confidence_report": {
+        "retrieval_confidence": 0.125,
+        "citation_coverage": 1.0,
+        "answer_completeness": 0.98,
+        "composite_score": 0.7045
+      },
+      "fallback_triggered": true
+    },
+    {
+      "question": "What is the primary production database host name?",
+      "generated_answer": "The primary production database host is prod-db-01.internal.net [1].",
+      "ground_truth": "The primary production database host is prod-db-01.internal.net.",
+      "category": "straightforward_lookup",
+      "metrics": {
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "confidence_report": {
+        "retrieval_confidence": 0.10869565217391304,
+        "citation_coverage": 1.0,
+        "answer_completeness": 0.98,
+        "composite_score": 0.6991
+      },
+      "fallback_triggered": true
+    },
+    {
+      "question": "Which service runs on port 8001 and what headers are required to communicate with it?",
+      "generated_answer": "The Authentication Service runs on port 8001 [1]. Communicate with it using a Bearer token [2].",
+      "ground_truth": "The Authentication Service runs on port 8001. To communicate with it, requests must supply a Bearer token in the Authorization header.",
+      "category": "multi_hop",
+      "metrics": {
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "confidence_report": {
+        "retrieval_confidence": 0.15555555555555556,
+        "citation_coverage": 1.0,
+        "answer_completeness": 0.98,
+        "composite_score": 0.7145
+      },
+      "fallback_triggered": true
+    },
+    {
+      "question": "What is the specific IP address of the gateway router?",
+      "generated_answer": "I do not have enough information in the provided context to answer this question.",
+      "ground_truth": "I do not have enough information in the provided context to answer this question.",
+      "category": "no_answer",
+      "metrics": {
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "confidence_report": {
+        "retrieval_confidence": 0.06666666666666667,
+        "citation_coverage": 1.0,
+        "answer_completeness": 0.98,
+        "composite_score": 0.6852
+      },
+      "fallback_triggered": true
+    },
+    {
+      "question": "How long is the validity duration?",
+      "generated_answer": "I do not have enough information in the provided context to answer this question.",
+      "ground_truth": "The context mentions multiple validity durations: access tokens are valid for 1 hour, refresh tokens are valid for 30 days, key rotation grace periods are valid for 24 hours, and database backup retention lasts 30 days (daily), 90 days (weekly), or indefinitely (monthly). Please specify which one you are asking about.",
+      "category": "ambiguous",
+      "metrics": {
+        "correctness": 0.94,
+        "faithfulness": 1.0,
+        "retrieval_relevance": 1.0,
+        "citation_accuracy": 1.0
+      },
+      "confidence_report": {
+        "retrieval_confidence": 0.08333333333333333,
+        "citation_coverage": 1.0,
+        "answer_completeness": 0.98,
+        "composite_score": 0.6907
+      },
+      "fallback_triggered": true
+    }
+  ]
+}
