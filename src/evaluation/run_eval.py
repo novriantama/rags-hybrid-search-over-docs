@@ -25,15 +25,28 @@ class MockOpenAIClient:
         self.embeddings = MagicMock()
         self.chat = MagicMock()
         
-        # Mock embeddings output
-        mock_emb = MagicMock()
-        mock_emb.embedding = [0.0] * 1536
-        mock_emb_response = MagicMock()
-        mock_emb_response.data = [mock_emb]
-        self.embeddings.create.return_value = mock_emb_response
+        # Configure embeddings mock dynamically
+        self.embeddings.create = self.mock_embeddings_create
         
-        # Configure chat completions
+        # Configure chat completions mock dynamically
         self.chat.completions.create = self.mock_chat_completion
+
+    def mock_embeddings_create(self, input, model):
+        mock_response = MagicMock()
+        
+        if isinstance(input, str):
+            count = 1
+        else:
+            count = len(input)
+            
+        embs = []
+        for _ in range(count):
+            mock_emb = MagicMock()
+            mock_emb.embedding = [0.0] * 1536
+            embs.append(mock_emb)
+            
+        mock_response.data = embs
+        return mock_response
         
     def mock_chat_completion(self, model, messages, temperature=0.0, max_tokens=None):
         system_content = messages[0]["content"] if messages else ""
