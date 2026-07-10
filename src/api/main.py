@@ -84,11 +84,23 @@ async def ask_question(request: AskRequest):
             completeness_score=conf_report.get("completeness_score", 0.0)
         )
         
+        retrieved_chunks = []
+        for item in results:
+            chunk = item["chunk"]
+            retrieved_chunks.append({
+                "id": chunk.id,
+                "text": chunk.text,
+                "source_file": chunk.source_file,
+                "section_heading": chunk.section_heading,
+                "score": float(item.get("score", 1.0))
+            })
+            
         return AskResponse(
             answer=pipeline_output["answer"],
             confidence_report=confidence,
             citations=citations,
-            fallback_triggered=pipeline_output.get("fallback_triggered", False)
+            fallback_triggered=pipeline_output.get("fallback_triggered", False),
+            retrieved_chunks=retrieved_chunks
         )
     except Exception as e:
         raise HTTPException(

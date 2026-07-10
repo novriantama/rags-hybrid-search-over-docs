@@ -24,12 +24,21 @@ class CitationSchema(BaseModel):
     source_file: str = Field(..., description="Source document filename matching the citation.")
     result: str = Field(..., description="Verification result (e.g. 'VERIFIED' or 'UNSUPPORTED').")
 
+class RetrievedChunkSchema(BaseModel):
+    """Details of a retrieved chunk from database."""
+    id: str = Field(..., description="Unique chunk identifier.")
+    text: str = Field(..., description="Text content snippet of the chunk.")
+    source_file: str = Field(..., description="Source document file name.")
+    section_heading: Optional[str] = Field(None, description="Heading of the section containing the chunk.")
+    score: float = Field(..., description="Relevance score (similarity or fused ranking score).")
+
 class AskResponse(BaseModel):
     """Response payload for RAG querying."""
     answer: str = Field(..., description="Grounded markdown formatted answer.")
     confidence_report: ConfidenceReportSchema = Field(..., description="Calculated scores evaluating response reliability.")
     citations: List[CitationSchema] = Field(..., description="List of parsed and LLM-verified citations.")
     fallback_triggered: bool = Field(..., description="True if retrieval confidence was too low and fallback report was output.")
+    retrieved_chunks: List[RetrievedChunkSchema] = Field(..., description="Ranked source chunks retrieved for the query.")
 
 class DocumentSchema(BaseModel):
     """Details of a document stored in the raw corpus workspace."""
