@@ -34,7 +34,7 @@ class HybridRetriever:
         # 3. Format results mapping metadata back to DocumentChunk
         formatted_results = []
         for res in db_results:
-            meta = res["metadata"]
+            meta = res["metadata"] or {}
             
             # Reconstruct DocumentChunk object from search result metadata
             chunk = DocumentChunk(

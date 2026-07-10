@@ -12,11 +12,6 @@ services:
       - IS_PERSISTENT=TRUE
       - PERSIST_DIRECTORY=/chroma/data
     restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
 
   rag-api:
     build:
@@ -32,8 +27,7 @@ services:
       - CHROMA_PORT=8000
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     depends_on:
-      chromadb:
-        condition: service_healthy
+      - chromadb
     command: bash -c "python -m src.ingestion.seed && uvicorn src.api.main:app --host 0.0.0.0 --port 8000"
     restart: always
 
@@ -51,8 +45,7 @@ services:
       - CHROMA_PORT=8000
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     depends_on:
-      chromadb:
-        condition: service_healthy
+      - chromadb
     command: python3 -m http.server 8501 --directory /app/frontend/dist
     restart: always
 

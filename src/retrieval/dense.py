@@ -139,10 +139,17 @@ class DenseIndex:
     def clear(self):
         """Resets the vector database."""
         try:
-            self.client.delete_collection("rag_chunks")
+            # Attempt to clear items by ID to keep the collection reference stable
+            existing = self.collection.get()
+            if existing and existing.get("ids"):
+                self.collection.delete(ids=existing["ids"])
         except Exception:
-            pass
-        self.collection = self.client.get_or_create_collection(
-            name="rag_chunks",
-            metadata={"hnsw:space": "cosine"}
-        )
+            # Fallback to recreate collection if delete by ID fails
+            try:
+                self.client.delete_collection("rag_chunks")
+            except Exception:
+                pass
+            self.collection = self.client.get_or_create_collection(
+                name="rag_chunks",
+                metadata={"hnsw:space": "cosine"}
+            )

@@ -13,9 +13,30 @@ from src.retrieval.index_manager import IndexManager
 
 def main():
     print("=== Seeding RAG Database Corpus ===")
+    
+    # Wait for ChromaDB to be responsive (retry up to 20 times)
+    import time
+    print("Waiting for database connection...")
+    manager = None
+    for attempt in range(20):
+        try:
+            temp_manager = IndexManager()
+            temp_manager.dense_index.client.heartbeat()
+            manager = temp_manager
+            print("Database connection established!")
+            break
+        except Exception as e:
+            if attempt == 19:
+                print(f"Error: Could not connect to ChromaDB after 20 attempts: {e}")
+                sys.exit(1)
+            time.sleep(1)
+
+    if manager is None:
+        print("Error: IndexManager was not initialized. Exiting.")
+        sys.exit(1)
+
     loader = DocumentLoader()
     orchestrator = ChunkingOrchestrator()
-    manager = IndexManager()
     
     # Clear previous indexes
     print("Clearing database and sparse indexes...")

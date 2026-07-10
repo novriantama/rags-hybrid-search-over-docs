@@ -1,108 +1,32 @@
 {
-  "timestamp": "2026-07-09T18:17:52.312046",
-  "mock_mode": true,
+  "timestamp": "2026-07-10T14:59:52.098804",
+  "mock_mode": false,
   "results": {
     "fixed": {
       "chunk_count": 21,
       "averages": {
-        "correctness": 0.94,
-        "faithfulness": 1.0,
+        "correctness": 0.9,
+        "faithfulness": 0.9,
         "retrieval_relevance": 1.0,
         "citation_accuracy": 1.0
       },
       "detail": [
         {
           "question": "What is the expiration time for access tokens?",
-          "generated_answer": "Access tokens expire exactly 1 hour after issuance [1].",
+          "generated_answer": "### What We Found\n\nThe retrieved context includes direct information about access token expiration:\n\n- In `sample_doc.md` under **Authentication**, it says tokens expire after **1 hour**.\n- In `auth_service.md` under **Protocols and Tokens**, it specifies that access tokens expire exactly **1 hour**, or **3600 seconds**, after issuance.\n\n### What Is Missing\n\nThe context provides the expiration time clearly. However, it does not include additional details such as:\n\n- Whether expiration can vary by environment or client type.\n- Whether token lifetime is configurable.\n- Any grace period or clock-skew handling after expiration.\n\n### Recommended Documents\n\n- `sample_doc.md` — **Authentication**\n- `auth_service.md` — **Authentication and Authorization Service**\n- `auth_service.md` — **Protocols and Tokens**\n- `sample_doc.md` — **Internal API Rules and Guidelines**\n- `deployment_ops.md` — **Deployment Pipelines**",
           "ground_truth": "Access tokens expire exactly 1 hour (3600 seconds) after issuance.",
           "category": "straightforward_lookup",
           "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
+            "correctness": 0.9,
+            "faithfulness": 0.9,
             "retrieval_relevance": 1.0,
             "citation_accuracy": 1.0
           },
           "confidence_report": {
             "retrieval_confidence": 0.125,
             "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7045
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "What is the primary production database host name?",
-          "generated_answer": "The primary production database host is prod-db-01.internal.net [1].",
-          "ground_truth": "The primary production database host is prod-db-01.internal.net.",
-          "category": "straightforward_lookup",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.10869565217391304,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6991
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "Which service runs on port 8001 and what headers are required to communicate with it?",
-          "generated_answer": "The Authentication Service runs on port 8001 [1]. Communicate with it using a Bearer token [2].",
-          "ground_truth": "The Authentication Service runs on port 8001. To communicate with it, requests must supply a Bearer token in the Authorization header.",
-          "category": "multi_hop",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.15555555555555556,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7145
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "What is the specific IP address of the gateway router?",
-          "generated_answer": "I do not have enough information in the provided context to answer this question.",
-          "ground_truth": "I do not have enough information in the provided context to answer this question.",
-          "category": "no_answer",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.06666666666666667,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6852
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "How long is the validity duration?",
-          "generated_answer": "I do not have enough information in the provided context to answer this question.",
-          "ground_truth": "The context mentions multiple validity durations: access tokens are valid for 1 hour, refresh tokens are valid for 30 days, key rotation grace periods are valid for 24 hours, and database backup retention lasts 30 days (daily), 90 days (weekly), or indefinitely (monthly). Please specify which one you are asking about.",
-          "category": "ambiguous",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.08333333333333333,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6907
+            "answer_completeness": 1.0,
+            "composite_score": 0.7113
           },
           "fallback_triggered": true
         }
@@ -111,7 +35,7 @@
     "recursive": {
       "chunk_count": 19,
       "averages": {
-        "correctness": 0.94,
+        "correctness": 1.0,
         "faithfulness": 1.0,
         "retrieval_relevance": 1.0,
         "citation_accuracy": 1.0
@@ -119,11 +43,11 @@
       "detail": [
         {
           "question": "What is the expiration time for access tokens?",
-          "generated_answer": "Access tokens expire exactly 1 hour after issuance [1].",
+          "generated_answer": "### What We Found\n\nThe retrieved context includes clear information about access token expiration:\n\n- In `sample_doc.md`, the **Authentication** section states that tokens expire after **1 hour**.\n- In `auth_service.md`, the **Protocols and Tokens** section specifies that access tokens expire exactly **1 hour**, or **3600 seconds**, after issuance.\n\n### What Is Missing\n\nNothing essential appears to be missing for this question. The context directly answers the expiration time for access tokens.\n\n### Recommended Documents\n\n- `sample_doc.md` — **Authentication**\n- `auth_service.md` — **Authentication and Authorization Service**\n- `auth_service.md` — **Protocols and Tokens**\n- `sample_doc.md` — **Internal API Rules and Guidelines**\n- `auth_service.md` — **Token Signing and Cryptography**",
           "ground_truth": "Access tokens expire exactly 1 hour (3600 seconds) after issuance.",
           "category": "straightforward_lookup",
           "metrics": {
-            "correctness": 0.94,
+            "correctness": 1.0,
             "faithfulness": 1.0,
             "retrieval_relevance": 1.0,
             "citation_accuracy": 1.0
@@ -131,84 +55,65 @@
           "confidence_report": {
             "retrieval_confidence": 0.125,
             "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7045
+            "answer_completeness": 1.0,
+            "composite_score": 0.7113
           },
           "fallback_triggered": true
         },
         {
-          "question": "What is the primary production database host name?",
-          "generated_answer": "The primary production database host is prod-db-01.internal.net [1].",
-          "ground_truth": "The primary production database host is prod-db-01.internal.net.",
+          "question": "Which algorithm is used for signing JWT tokens?",
+          "generated_answer": "### What We Found\n\nThe retrieved authentication documentation includes a direct match for the question:\n\n- In `auth_service.md`, under **Token Signing and Cryptography**, it states that tokens are signed using the **RS256** algorithm.\n\n### What Is Missing\n\nNothing essential appears to be missing for this question. The context directly answers which algorithm is used for signing JWT tokens.\n\n### Recommended Documents\n\n- `auth_service.md` — **Token Signing and Cryptography**\n- `auth_service.md` — **Protocols and Tokens**\n- `auth_service.md` — **Authentication and Authorization Service**\n- `sample_doc.md` — **Authentication**",
+          "ground_truth": "JWT tokens are signed using the RS256 algorithm.",
           "category": "straightforward_lookup",
           "metrics": {
-            "correctness": 0.94,
+            "correctness": 1.0,
             "faithfulness": 1.0,
             "retrieval_relevance": 1.0,
             "citation_accuracy": 1.0
           },
           "confidence_report": {
-            "retrieval_confidence": 0.10869565217391304,
+            "retrieval_confidence": 0.07272727272727272,
             "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6991
+            "answer_completeness": 1.0,
+            "composite_score": 0.694
           },
           "fallback_triggered": true
         },
         {
-          "question": "Which service runs on port 8001 and what headers are required to communicate with it?",
-          "generated_answer": "The Authentication Service runs on port 8001 [1]. Communicate with it using a Bearer token [2].",
-          "ground_truth": "The Authentication Service runs on port 8001. To communicate with it, requests must supply a Bearer token in the Authorization header.",
-          "category": "multi_hop",
+          "question": "At what URL is the JWKS public key endpoint located?",
+          "generated_answer": "### What We Found\n\nThe retrieved context includes the JWKS public key endpoint in **auth_service.md**, under **Token Signing and Cryptography**:\n\n`https://auth.internal.net/.well-known/jwks.json`\n\nIt also states that tokens are signed using the **RS256** algorithm and that keys rotate monthly.\n\n### What Is Missing\n\nNothing essential is missing for this specific question. The URL of the JWKS public key endpoint is explicitly provided in the retrieved context.\n\n### Recommended Documents\n\n- **auth_service.md** — Section: **Token Signing and Cryptography**\n- **auth_service.md** — Section: **Protocols and Tokens**",
+          "ground_truth": "The public keys are exposed via JWKS at https://auth.internal.net/.well-known/jwks.json.",
+          "category": "straightforward_lookup",
           "metrics": {
-            "correctness": 0.94,
+            "correctness": 1.0,
             "faithfulness": 1.0,
             "retrieval_relevance": 1.0,
             "citation_accuracy": 1.0
           },
           "confidence_report": {
-            "retrieval_confidence": 0.15555555555555556,
+            "retrieval_confidence": 0.11538461538461539,
             "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7145
+            "answer_completeness": 1.0,
+            "composite_score": 0.7081
           },
           "fallback_triggered": true
         },
         {
-          "question": "What is the specific IP address of the gateway router?",
-          "generated_answer": "I do not have enough information in the provided context to answer this question.",
-          "ground_truth": "I do not have enough information in the provided context to answer this question.",
-          "category": "no_answer",
+          "question": "When is public-private key rotation scheduled?",
+          "generated_answer": "### What We Found\n\nThe retrieved context includes a relevant section from **`auth_service.md` → “Token Signing and Cryptography”**.\n\nIt states that public-private key pairs are rotated **automatically on the 1st of every month at 00:00 UTC**. It also notes that previous keys are retained for a **24-hour grace period** to prevent request failures during propagation.\n\n### What Is Missing\n\nThe context appears sufficient to answer the scheduling part of the question. However, it does not provide additional operational details such as:\n\n- Who owns or manages the rotation process\n- Whether rotation can be manually triggered\n- How services are notified of new keys\n- Any exception or incident-handling process if rotation fails\n\n### Recommended Documents\n\n- **`auth_service.md`**\n  - Section: **Token Signing and Cryptography**\n\n- **`deployment_ops.md`**\n  - Section: **Ports and Network Configuration**\n\n- **`database_guide.md`**\n  - Section: **Production Database Setup**\n  - Section: **Database Replication and Failover**\n\n- **`auth_service.md`**\n  - Section: **Authorization Roles and Scopes**",
+          "ground_truth": "Key rotation occurs automatically on the 1st of every month at 00:00 UTC.",
+          "category": "straightforward_lookup",
           "metrics": {
-            "correctness": 0.94,
+            "correctness": 1.0,
             "faithfulness": 1.0,
             "retrieval_relevance": 1.0,
             "citation_accuracy": 1.0
           },
           "confidence_report": {
-            "retrieval_confidence": 0.06666666666666667,
+            "retrieval_confidence": 0.0784313725490196,
             "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6852
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "How long is the validity duration?",
-          "generated_answer": "I do not have enough information in the provided context to answer this question.",
-          "ground_truth": "The context mentions multiple validity durations: access tokens are valid for 1 hour, refresh tokens are valid for 30 days, key rotation grace periods are valid for 24 hours, and database backup retention lasts 30 days (daily), 90 days (weekly), or indefinitely (monthly). Please specify which one you are asking about.",
-          "category": "ambiguous",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.08333333333333333,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6907
+            "answer_completeness": 1.0,
+            "composite_score": 0.6959
           },
           "fallback_triggered": true
         }
@@ -217,7 +122,7 @@
     "semantic": {
       "chunk_count": 79,
       "averages": {
-        "correctness": 0.94,
+        "correctness": 1.0,
         "faithfulness": 1.0,
         "retrieval_relevance": 1.0,
         "citation_accuracy": 1.0
@@ -225,11 +130,11 @@
       "detail": [
         {
           "question": "What is the expiration time for access tokens?",
-          "generated_answer": "Access tokens expire exactly 1 hour after issuance [1].",
+          "generated_answer": "### What We Found\n\nThe retrieved documentation includes a direct statement about access token expiration:\n\n- In `auth_service.md`, under **Protocols and Tokens**, access tokens expire exactly **1 hour**, or **3600 seconds**, after issuance.\n\n### What Is Missing\n\nNothing essential appears to be missing for this specific question. The provided context directly answers the requested expiration time for access tokens.\n\n### Recommended Documents\n\n- `auth_service.md` — **Protocols and Tokens**\n  - Contains the access token expiration time.\n  - Also includes related information about refresh tokens and JWT usage.\n\n- `sample_doc.md` — **Authentication**\n  - Mentions Bearer token usage in the `Authorization` header, but does not provide expiration details.",
           "ground_truth": "Access tokens expire exactly 1 hour (3600 seconds) after issuance.",
           "category": "straightforward_lookup",
           "metrics": {
-            "correctness": 0.94,
+            "correctness": 1.0,
             "faithfulness": 1.0,
             "retrieval_relevance": 1.0,
             "citation_accuracy": 1.0
@@ -237,84 +142,8 @@
           "confidence_report": {
             "retrieval_confidence": 0.17647058823529413,
             "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7214
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "What is the primary production database host name?",
-          "generated_answer": "The primary production database host is prod-db-01.internal.net [1].",
-          "ground_truth": "The primary production database host is prod-db-01.internal.net.",
-          "category": "straightforward_lookup",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.3333333333333333,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7732
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "Which service runs on port 8001 and what headers are required to communicate with it?",
-          "generated_answer": "The Authentication Service runs on port 8001 [1]. Communicate with it using a Bearer token [2].",
-          "ground_truth": "The Authentication Service runs on port 8001. To communicate with it, requests must supply a Bearer token in the Authorization header.",
-          "category": "multi_hop",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.29411764705882354,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.7603
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "What is the specific IP address of the gateway router?",
-          "generated_answer": "I do not have enough information in the provided context to answer this question.",
-          "ground_truth": "I do not have enough information in the provided context to answer this question.",
-          "category": "no_answer",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.08695652173913043,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6919
-          },
-          "fallback_triggered": true
-        },
-        {
-          "question": "How long is the validity duration?",
-          "generated_answer": "I do not have enough information in the provided context to answer this question.",
-          "ground_truth": "The context mentions multiple validity durations: access tokens are valid for 1 hour, refresh tokens are valid for 30 days, key rotation grace periods are valid for 24 hours, and database backup retention lasts 30 days (daily), 90 days (weekly), or indefinitely (monthly). Please specify which one you are asking about.",
-          "category": "ambiguous",
-          "metrics": {
-            "correctness": 0.94,
-            "faithfulness": 1.0,
-            "retrieval_relevance": 1.0,
-            "citation_accuracy": 1.0
-          },
-          "confidence_report": {
-            "retrieval_confidence": 0.09090909090909091,
-            "citation_coverage": 1.0,
-            "answer_completeness": 0.98,
-            "composite_score": 0.6932
+            "answer_completeness": 1.0,
+            "composite_score": 0.7282
           },
           "fallback_triggered": true
         }

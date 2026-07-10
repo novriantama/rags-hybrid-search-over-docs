@@ -65,7 +65,7 @@ seed:
 
 chunk:
 	@echo "Running chunking comparison report..."
-	$(PYTHON) scratch/test_chunker_comparison.py
+	$(PYTHON) -m src.evaluation.compare_chunking
 
 dense-search:
 	@echo "Running vector dense retrieval lookup..."
