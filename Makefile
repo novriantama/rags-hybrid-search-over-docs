@@ -1,4 +1,4 @@
-.PHONY: help install test ingest chunk dense-search sparse-search rrf-search rerank-search run run-api run-frontend run-dashboard docker-build docker-up docker-down docker-logs clean
+.PHONY: help install test ingest seed chunk dense-search sparse-search rrf-search rerank-search run run-api run-frontend run-dashboard docker-build docker-up docker-down docker-logs clean
 
 # Default shell
 SHELL := /bin/bash
@@ -20,6 +20,7 @@ help:
 	@echo ""
 	@echo "Pipeline Execution Runs:"
 	@echo "  make ingest          - Parse and ingest raw documents to data/processed"
+	@echo "  make seed            - Clear and seed RAG database with documentation corpus"
 	@echo "  make chunk           - Run chunker comparison (Fixed, Recursive, Semantic)"
 	@echo "  make dense-search    - Run dense retrieval search against ChromaDB"
 	@echo "  make sparse-search   - Run sparse retrieval search against BM25"
@@ -57,6 +58,10 @@ test:
 ingest:
 	@echo "Running document ingestion loading pipeline..."
 	$(PYTHON) scratch/test_ingestion_runner.py
+
+seed:
+	@echo "Seeding RAG database with documentation corpus..."
+	$(PYTHON) -m src.ingestion.seed
 
 chunk:
 	@echo "Running chunking comparison report..."

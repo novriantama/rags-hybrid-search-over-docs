@@ -15,7 +15,10 @@ class GroundedGenerator:
     @property
     def openai_client(self) -> OpenAI:
         if not self._openai_client:
-            self._openai_client = OpenAI(api_key=settings.openai_api_key or "mock_key")
+            self._openai_client = OpenAI(
+                api_key=settings.openai_api_key or "mock_key",
+                base_url=settings.openai_api_base or None
+            )
         return self._openai_client
 
     def format_context_blocks(self, chunks: List[DocumentChunk]) -> str:

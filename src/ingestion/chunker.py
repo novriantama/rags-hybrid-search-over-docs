@@ -92,7 +92,10 @@ class SemanticChunker(BaseChunker):
     @property
     def client(self) -> OpenAI:
         if not self._client:
-            self._client = OpenAI(api_key=settings.openai_api_key or "mock_key")
+            self._client = OpenAI(
+                api_key=settings.openai_api_key or "mock_key",
+                base_url=settings.openai_api_base or None
+            )
         return self._client
         
     def _split_sentences(self, text: str) -> List[str]:

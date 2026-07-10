@@ -4,8 +4,11 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
+# pyrefly: ignore [missing-import]
 from src.ingestion.loader import DocumentLoader
+# pyrefly: ignore [missing-import]
 from src.ingestion.chunker import ChunkingOrchestrator
+# pyrefly: ignore [missing-import]
 from src.retrieval.index_manager import IndexManager
 
 def main():
