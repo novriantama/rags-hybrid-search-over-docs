@@ -26,6 +26,9 @@ services:
       - CHROMA_HOST=chromadb
       - CHROMA_PORT=8000
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_BASE=${OPENAI_API_BASE}
+      - LLM_MODEL=${LLM_MODEL}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL}
     depends_on:
       - chromadb
     command: bash -c "python -m src.ingestion.seed && uvicorn src.api.main:app --host 0.0.0.0 --port 8000"
@@ -44,6 +47,9 @@ services:
       - CHROMA_HOST=chromadb
       - CHROMA_PORT=8000
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_BASE=${OPENAI_API_BASE}
+      - LLM_MODEL=${LLM_MODEL}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL}
     depends_on:
       - chromadb
     command: python3 -m http.server 8501 --directory /app/frontend/dist
