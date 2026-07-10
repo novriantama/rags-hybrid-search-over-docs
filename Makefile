@@ -1,4 +1,4 @@
-.PHONY: help install test ingest chunk dense-search sparse-search rrf-search rerank-search docker-build docker-up docker-down docker-logs clean
+.PHONY: help install test ingest chunk dense-search sparse-search rrf-search rerank-search run run-api run-frontend run-dashboard docker-build docker-up docker-down docker-logs clean
 
 # Default shell
 SHELL := /bin/bash
@@ -25,6 +25,12 @@ help:
 	@echo "  make sparse-search   - Run sparse retrieval search against BM25"
 	@echo "  make rrf-search      - Run RRF hybrid retrieval search scenarios"
 	@echo "  make rerank-search   - Run second-pass Cross-Encoder reranking"
+	@echo ""
+	@echo "Running the Application:"
+	@echo "  make run             - Run API and React dashboard concurrently"
+	@echo "  make run-api         - Start FastAPI backend server"
+	@echo "  make run-frontend    - Start Vite React frontend server"
+	@echo "  make run-dashboard   - Start Streamlit bridge page"
 	@echo ""
 	@echo "Docker Operations:"
 	@echo "  make docker-build    - Build app image using Dockerfile"
@@ -98,3 +104,21 @@ clean:
 	rm -rf data/chroma/*
 	rm -f data/bm25/bm25_index.pkl
 	@echo "Clean completed successfully."
+
+run:
+	@echo "Starting API backend and Frontend dashboard..."
+	@echo "Open http://localhost:5173 to view the dashboard."
+	@echo "Press Ctrl+C to stop both."
+	trap 'kill 0' EXIT; $(PYTHON) -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000 & npm --prefix frontend run dev
+
+run-api:
+	@echo "Starting FastAPI backend server..."
+	$(PYTHON) -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+
+run-frontend:
+	@echo "Starting Vite React frontend server..."
+	npm --prefix frontend run dev
+
+run-dashboard:
+	@echo "Starting Streamlit dashboard bridge page..."
+	$(PYTHON) -m streamlit run src/dashboard/app.py --server.port 8501
