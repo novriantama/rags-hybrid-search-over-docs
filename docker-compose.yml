@@ -34,7 +34,7 @@ services:
     depends_on:
       chromadb:
         condition: service_healthy
-    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+    command: bash -c "python -m src.ingestion.seed && uvicorn src.api.main:app --host 0.0.0.0 --port 8000"
     restart: always
 
   rag-dashboard:
@@ -53,7 +53,7 @@ services:
     depends_on:
       chromadb:
         condition: service_healthy
-    command: streamlit run src/dashboard/app.py --server.address 0.0.0.0 --server.port 8501
+    command: python3 -m http.server 8501 --directory /app/frontend/dist
     restart: always
 
 volumes:

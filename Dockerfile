@@ -1,23 +1,36 @@
-# Build Stage
+# Stage 1: Build the React frontend
+FROM node:20-slim AS frontend-builder
+
+WORKDIR /frontend
+
+# Copy dependency configs
+COPY frontend/package*.json ./
+
+# Install packages
+RUN npm install
+
+# Copy source code and compile production assets
+COPY frontend/ ./
+RUN npm run build
+
+# Stage 2: Build Python dependencies
 FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
-# Install system dependencies required for building C extensions (e.g. for certain numpy or vector libraries)
+# Install system utilities needed for compiling c-extensions
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy package config files
 COPY pyproject.toml README.md ./
 
-# Install python dependencies first to cache this layer
-# Note: we use --no-cache-dir to minimize image size
+# Upgrade pip and install package dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
-# Final Stage
+# Stage 3: Final production image
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -27,22 +40,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy installed site-packages and binaries from builder
+# Copy site-packages from builder stage
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-# Copy app code
+# Copy codebase elements
 COPY src/ ./src
 COPY data/ ./data
 COPY tests/ ./tests
 
-# Set environment variables
+# Copy pre-compiled React build folder
+COPY --from=frontend-builder /frontend/dist/ ./frontend/dist/
+
+# Set env variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# Expose ports for FastAPI (8000) and Streamlit (8501)
 EXPOSE 8000
 EXPOSE 8501
 
-# Default command starts the FastAPI server
+# Start the uvicorn API server
 CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
